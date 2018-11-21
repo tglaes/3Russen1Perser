@@ -12,6 +12,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -27,6 +29,7 @@ public class MyUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         final VerticalLayout layout = new VerticalLayout();
         
+        Utils.CheckRootFolder();
         Database.Connect();
         
         //WrappedSession ws = vaadinRequest.getWrappedSession(false);    
@@ -35,9 +38,10 @@ public class MyUI extends UI {
         name.setCaption("Type your name here:");
 
         Button button = new Button("Click Me");
-        button.addClickListener(e -> {                   
+        button.addClickListener(e -> {
+            User u = Database.GetUser(1);
             layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!"));  
+                    + ", it works!, " + u.GetFullName()));
         });
         
         layout.addComponents(name, button);

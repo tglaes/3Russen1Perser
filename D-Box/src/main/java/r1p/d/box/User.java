@@ -21,7 +21,20 @@ public class User {
     
     private String LastName;
     
-    private List<Folder> UserFolders;
+    private List<DBoxFile> UserFolders;
+    
+    public User(int UserID, String Email, String FirstName, String LastName){
+        this.UserID = UserID;
+        this.EMail = EMail;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+    }
+    
+    public User(String EMail, String password ,String FirstName, String LastName){
+        this.EMail = EMail;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+    }
     
     public int GetUserID(){
         return UserID;
@@ -35,15 +48,15 @@ public class User {
         return FirstName + ", " + LastName;
     }
     
-    public Folder GetSharedFolder(){
+    public DBoxFile GetSharedFolder(){
         return null;
     }
     
-    public Folder GetPrivateFolder() {
+    public DBoxFile GetPrivateFolder() {
         return null;
     }
     
-    public Folder GetPublicFolder() {
+    public DBoxFile GetPublicFolder() {
         return null;
     }
 }
