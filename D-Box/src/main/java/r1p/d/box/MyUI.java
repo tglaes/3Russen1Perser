@@ -27,15 +27,17 @@ public class MyUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         final VerticalLayout layout = new VerticalLayout();
         
-        //WrappedSession ws = vaadinRequest.getWrappedSession(false);
+        Database.Connect();
+        
+        //WrappedSession ws = vaadinRequest.getWrappedSession(false);    
         
         final TextField name = new TextField();
         name.setCaption("Type your name here:");
 
         Button button = new Button("Click Me");
-        button.addClickListener(e -> {
+        button.addClickListener(e -> {                   
             layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!"));
+                    + ", it works!"));  
         });
         
         layout.addComponents(name, button);
