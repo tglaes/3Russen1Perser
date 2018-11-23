@@ -12,8 +12,10 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import static java.lang.System.exit;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -30,7 +32,9 @@ public class MyUI extends UI {
         final VerticalLayout layout = new VerticalLayout();
         
         Utils.CheckRootFolder();
-        Database.Connect();
+        if (!Database.Connect()) {
+            exit(-1);
+        }
         
         //WrappedSession ws = vaadinRequest.getWrappedSession(false);    
         
@@ -40,8 +44,10 @@ public class MyUI extends UI {
         Button button = new Button("Click Me");
         button.addClickListener(e -> {
             User u = Database.GetUser(1);
+            List<DBoxFile> list = Database.GetUserStandardFolders(u.GetUserID());
+            
             layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!, " + u.GetFullName()));
+                    + ", it works!, " + list.toString()));
         });
         
         layout.addComponents(name, button);

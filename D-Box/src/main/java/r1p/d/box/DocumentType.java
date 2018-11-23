@@ -15,6 +15,6 @@ public enum DocumentType {
     Private,
     Public,
     Normal,
-    File
+    File;
     
 }

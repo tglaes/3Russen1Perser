@@ -21,8 +21,6 @@ public class User {
     
     private String LastName;
     
-    private List<DBoxFile> UserFolders;
-    
     public User(int UserID, String Email, String FirstName, String LastName){
         this.UserID = UserID;
         this.EMail = EMail;
@@ -46,17 +44,5 @@ public class User {
     
     public String GetFullName(){
         return FirstName + ", " + LastName;
-    }
-    
-    public DBoxFile GetSharedFolder(){
-        return null;
-    }
-    
-    public DBoxFile GetPrivateFolder() {
-        return null;
-    }
-    
-    public DBoxFile GetPublicFolder() {
-        return null;
     }
 }
