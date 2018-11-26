@@ -13,13 +13,18 @@ import java.io.File;
  */
 public class Utils {
     
-    public static final String DATA_BASE_PATH = "C:\\Users\\Tristan Glaes\\Documents\\3Russen1Perser\\D-Box\\src\\main\\data\\";
+    // Tristan
+    public static final String PROJECT_PATH = "C:\\Users\\Tristan Glaes\\Documents\\3Russen1Perser\\";
+    // Mahan
+    // Vadim
+    // Iurie
+    public static final String DATA_BASE_PATH = PROJECT_PATH + "D-Box\\src\\main\\data\\Database\\DBoxDB.db";
+    public static final String FILE_PATH = PROJECT_PATH + "D-Box\\src\\main\\data\\Root\\";
     
     public static void CheckRootFolder(){
         try {
-            String rootDirectoryPath = DATA_BASE_PATH + "Root\\";
 
-            File rootFolder = new File(rootDirectoryPath);
+            File rootFolder = new File(FILE_PATH);
             if (!rootFolder.exists()) {
                 rootFolder.mkdir();
             }
@@ -66,5 +71,37 @@ public class Utils {
         }
         
         return type;
+    }
+    
+    /**
+     * Create a file archieve for a new user.
+     * @param UserID The Id of the user.
+     * @return True, if the archieve was successfully created, false otherwise.
+     */
+    public static boolean CreateUserArchieve(int UserID){
+        
+        try {
+            File userRootFolder = new File(FILE_PATH + UserID);
+            if (userRootFolder.mkdir()) {
+                
+                File userSharedFolder = new File(userRootFolder.getAbsolutePath() + "Shared");
+                File userPrivateFolder = new File(userRootFolder.getAbsolutePath() + "Private");
+                File userPublicFolder = new File(userRootFolder.getAbsolutePath() + "Public");
+                
+                if (userSharedFolder.mkdir() && userPrivateFolder.mkdir() && userPublicFolder.mkdir()) {
+                    return true;
+                } else {
+                    return false;
+                }
+                
+            } else {
+                System.err.println("Could not create root folder for user: " + UserID);
+                return false;
+            }
+                    
+        } catch(Exception ex) {
+            System.err.println(ex.toString());
+            return false;
+        }
     }
 }

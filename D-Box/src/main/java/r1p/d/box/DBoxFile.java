@@ -12,7 +12,7 @@ import java.net.URI;
  *
  * @author Tristan Glaes
  */
-public class DBoxFile extends File{
+public class DBoxFile extends File {
     
     private int ID;
     private int UserID;
