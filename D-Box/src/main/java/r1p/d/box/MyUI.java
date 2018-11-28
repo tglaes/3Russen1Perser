@@ -6,15 +6,12 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.server.WrappedSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import static java.lang.System.exit;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -44,7 +41,7 @@ public class MyUI extends UI {
         Button button = new Button("Click Me");
         button.addClickListener(e -> {
             User u = Database.GetUser(1);
-            List<DBoxFile> list = Database.GetUserStandardFolders(u.GetUserID());
+            List<DBoxFile> list = Database.GetUserStandardFolders(u.getUserID());
             
             layout.addComponent(new Label("Thanks " + name.getValue() 
                     + ", it works!, " + list.toString()));

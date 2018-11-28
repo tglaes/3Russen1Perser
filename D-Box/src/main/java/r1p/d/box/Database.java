@@ -69,6 +69,12 @@ public class Database {
                     email = rs.getString(USER_EMAIL);
                     firstname = rs.getString(USER_FIRSTNAME);
                     lastname = rs.getString(USER_LASTNAME);
+                    User u = new User();
+                    u.setEmail(email);
+                    u.setUserID(UserID);
+                    u.setFirstname(firstname);
+                    u.setLastname(lastname);
+                    return u;
                 } else {
                     return null;
                 }
@@ -79,7 +85,6 @@ public class Database {
             System.out.println(ex.getMessage());
             return null;
         }
-        return new User(UserID, email, firstname, lastname);
     }
 
     /**
@@ -105,7 +110,12 @@ public class Database {
                         // Create the database entries for the basic file structure.
                         if (CreateBasicFileStructure(UserID)) {
                             // Return the new user object.
-                            return new User(UserID, email, firstname, lastname);
+                            User u = new User();
+                            u.setUserID(UserID);
+                            u.setEmail(email);
+                            u.setFirstname(firstname);
+                            u.setLastname(lastname);
+                            return u;
                         } else {
                             return null;
                         }                     
@@ -138,7 +148,11 @@ public class Database {
             
             if (rs != null) {
                 if (rs.next()) {
-                    return new User(rs.getInt(USER_ID),email, rs.getString(USER_FIRSTNAME), rs.getString(USER_LASTNAME));
+                    User u = new User();
+                    u.setUserID(rs.getInt(USER_ID));
+                    u.setFirstname(rs.getString(USER_FIRSTNAME));
+                    u.setLastname(rs.getString(USER_LASTNAME));              
+                    return u;
                 } else {
                     System.out.println("No user found with email: " + email + " and password: " + password);
                     return null;
@@ -219,8 +233,11 @@ public class Database {
                     int ID = rs.getInt(FOLDER_ID);
                     String Path = rs.getString(FOLDER_PATH);
                     int Type = rs.getInt(FOLDER_TYPE);
-                    
-                    DBoxFile df = new DBoxFile(ID, UserID, Utils.IntToDocumentType(Type), Path);
+                    DBoxFile df = new DBoxFile();
+                    df.setID(ID);
+                    df.setPath(Path);
+                    df.setType(Utils.IntToDocumentType(Type));
+                    df.setUserID(UserID);
                     folders.add(df);
                 }
             } else {

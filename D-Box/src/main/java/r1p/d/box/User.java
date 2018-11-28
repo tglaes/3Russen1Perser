@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Tristan Glaes
  */
-public class User {
+public class User implements java.io.Serializable {
     
     private int UserID;
     
@@ -21,28 +21,41 @@ public class User {
     
     private String LastName;
     
-    public User(int UserID, String Email, String FirstName, String LastName){
-        this.UserID = UserID;
-        this.EMail = EMail;
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-    }
+    public User(){}
     
-    public User(String EMail, String password ,String FirstName, String LastName){
-        this.EMail = EMail;
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-    }
-    
-    public int GetUserID(){
+    public int getUserID(){
         return UserID;
     }
     
-    public String GetEmail(){
+    public void setUserID(int userID){
+        UserID = userID;
+    }
+    
+    public String getEmail(){
         return EMail;
     }
     
-    public String GetFullName(){
+    public void setEmail(String email){
+        EMail = email;
+    }
+    
+    public String getFirstname(){
+        return FirstName;
+    }
+    
+    public void setFirstname(String firstname){
+        FirstName = firstname;
+    }
+    
+    public String getLastname(){
+        return LastName;
+    }
+    
+    public void setLastname(String lastname) {
+        LastName = lastname;
+    }
+    
+    public String getFullName(){
         return FirstName + ", " + LastName;
     }
 }

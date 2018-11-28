@@ -5,35 +5,48 @@
  */
 package r1p.d.box;
 
-import java.io.File;
-import java.net.URI;
-
 /**
  *
  * @author Tristan Glaes
  */
-public class DBoxFile extends File {
+public class DBoxFile implements java.io.Serializable {
     
     private int ID;
     private int UserID;
     private DocumentType Type;
+    private String Path;
 
-    public DBoxFile(int ID, int UserID, DocumentType Type, String pathname) {
-        super(pathname);
-        this.ID = ID;
-        this.UserID = UserID;
-        this.Type = Type;
-    }
+    public DBoxFile() {}
     
     public DocumentType getType() {
         return Type;
     }
     
-    public int GetID(){
+    public void setType(DocumentType t){
+        Type = t;
+    }
+    
+    public int getID(){
         return ID;
     }
     
-    public int GetUserID(){
+    public void setID(int id){
+        ID = id;
+    }
+    
+    public int getUserID(){
         return UserID;
+    }
+    
+    public void setUserID(int userID){
+        UserID = userID;
+    }
+    
+    public String getPath(){
+        return Path;
+    }
+    
+    public void setPath(String path){
+        Path = path;
     }
 }
