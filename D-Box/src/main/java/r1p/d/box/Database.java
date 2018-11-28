@@ -26,6 +26,10 @@ public class Database {
     public static final String FOLDER_PATH = "Path";
     public static final String FOLDER_TYPE = "Type";
     public static final String FOLDER_USERID = "UserID";
+    
+    public static final String FILE_ID = "ID";
+    public static final String FILE_PATH = "Path";
+    public static final String FILE_USERID = "UserID";
             
 
     private static Connection connection;
@@ -256,7 +260,51 @@ public class Database {
      * @return A list of DBoxFiles that the folder contains.
      */
     public static List<DBoxFile> GetFolderContent(int folderID) {
-        return null;
+        // Get all folders
+        String sql1 = "SELECT * FROM Folders AS f JOIN FoldersFolders AS ff ON f.ID=ff.ChildID AND ff.ParentID=" + folderID;
+        // Get all files
+        String sql2 = "SELECT * FROM Files AS f JOIN FilesFolders AS ff ON f.ID=ff.FileID AND ff.FolderID=" + FOLDER_ID;
+        List<DBoxFile> files = new ArrayList<DBoxFile>();
+        
+        try {
+            // FOLDERS
+            ResultSet rs = ExecuteSqlWithReturn(sql1);
+            if (rs != null) {
+                
+                while(rs.next()){
+                    DBoxFile f = new DBoxFile();
+                    f.setID(rs.getInt(FOLDER_ID));
+                    f.setPath(rs.getString(FOLDER_PATH));
+                    f.setType(Utils.IntToDocumentType(rs.getInt(FOLDER_TYPE)));
+                    f.setUserID(rs.getInt(FOLDER_USERID));                  
+                    files.add(f);
+                }
+                
+            // FILES
+                ResultSet rs2 = ExecuteSqlWithReturn(sql2);
+            if (rs2 != null) {
+                
+                while(rs2.next()){
+                    DBoxFile f = new DBoxFile();
+                    f.setID(rs2.getInt(FILE_ID));
+                    f.setPath(rs2.getString(FILE_PATH));
+                    f.setType(DocumentType.File);
+                    f.setUserID(rs2.getInt(FILE_USERID));                  
+                    files.add(f);
+                }
+                
+            } else {
+                return null;
+            }
+            } else {
+                return null;
+            }
+                     
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return null;
+        }   
+        return files;
     }
 
     /**
