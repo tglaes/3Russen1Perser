@@ -414,6 +414,28 @@ public class Database {
         return files;
     }
 
+    public static boolean CheckIfUserExists(String email) {
+        String sql = "SELECT * FROM Users WHERE email='" + email + "'";
+        
+        try
+        {
+            ResultSet rs = ExecuteSqlWithReturn(sql);
+            if (rs != null) {
+                
+                if (rs.next()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+    
     /**
      * 
      * @param sql The SQL-String to be executed.
