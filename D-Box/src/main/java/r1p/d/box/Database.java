@@ -91,6 +91,54 @@ public class Database {
         }
     }
 
+    
+    public static DBoxFile GetFile(int fileID){
+        
+        DBoxFile file = new DBoxFile();
+        
+        try
+        {
+            String sql = "SELECT * FROM Files WHERE ID=" + fileID;
+            ResultSet rs = ExecuteSqlWithReturn(sql);
+            if (rs != null) {
+                if (rs.next()) {
+                    
+                    file.setID(fileID);
+                    file.setPath(rs.getString(FILE_PATH));
+                    file.setType(DocumentType.File);
+                    file.setUserID(rs.getInt(FILE_USERID));
+                }
+            }         
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return null;
+        }
+        return file;
+    }
+    
+    public static DBoxFile GetFolder(int folderID){
+        
+        DBoxFile file = new DBoxFile();
+        
+        try
+        {
+            String sql = "SELECT * FROM Folders WHERE ID=" + folderID;
+            ResultSet rs = ExecuteSqlWithReturn(sql);
+            if (rs != null) {
+                if (rs.next()) {                  
+                    file.setID(folderID);
+                    file.setPath(rs.getString(FOLDER_PATH));
+                    file.setType(Utils.IntToDocumentType(rs.getInt(FOLDER_TYPE)));
+                    file.setUserID(rs.getInt(FOLDER_USERID));
+                }
+            }         
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return null;
+        }
+        return file;
+    }
+    
     /**
      * 
      * @param email The e-mail of the user.
@@ -175,8 +223,55 @@ public class Database {
      * @param fileID The file ID.
      * @return True if the file was deleted, false otherwise.
      */
-    public static boolean DeleteFile(int fileID) {
-        return false;
+    public static boolean DeleteFile(DBoxFile f) {
+        // Decide if file or folder
+        if (f.getType() == DocumentType.File) {
+            
+            // Save the filepath
+            String filePath = f.getPath();
+            
+            // Delete all references
+            String sql = "DELETE FROM FilesFolders WHERE FileID=" + f.getID();
+            if (ExecuteSql(sql)) {
+                
+                // Delete the file database entry
+                sql = "DELETE FROM Files WHERE ID=" + f.getID();
+                if (ExecuteSql(sql)) {
+                    // delete the physical file
+                    File file = new File(filePath);
+                    return file.delete();
+                } else {
+                    return false;
+                }           
+            } else {
+                return false;
+            }
+                     
+        } else if (f.getType() == DocumentType.Normal) {
+            
+            // Delete content
+            
+            String folderPath = f.getPath();
+            String sql = "DELETE FROM FoldersFolders WHERE ChildID=" + f.getID(); 
+            // Delete references
+            if (ExecuteSql(sql)) {
+                
+                sql = "DELETE FROM Folders WHERE ID=" + f.getID();
+                if (ExecuteSql(sql)) {
+                    
+                     // Delete the folder itself         
+                    File folder = new File(folderPath);
+                    return folder.delete();
+                    
+                } else {
+                    return false;
+                }              
+            } else {
+                return false;
+            }       
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -185,8 +280,20 @@ public class Database {
      * @param parentFileID The folder with the reference to the file.
      * @return @return True if the reference was deleted, false otherwise.
      */
-    public static boolean DeleteFileReference(int fileID, int parentFileID) {
-        return false;
+    public static boolean DeleteFileReference(DBoxFile f, int parentFileID) {
+        
+        // Decide if file or folder
+        if (f.getType() == DocumentType.File) {
+            String sql = "DELETE FROM FilesFolders WHERE FileID=" + f.getID();
+            return ExecuteSql(sql);
+            
+        } else if (f.getType() == DocumentType.Normal){
+            String sql = "DELETE FROM FoldersFolders WHERE ChildID=" + f.getID();
+            return ExecuteSql(sql);
+            
+        } else {
+            return false;
+        }
     }
 
     /**
