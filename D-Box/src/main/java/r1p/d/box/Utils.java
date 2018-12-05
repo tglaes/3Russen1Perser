@@ -83,17 +83,7 @@ public class Utils {
         try {
             File userRootFolder = new File(FILE_PATH + UserID);
             if (userRootFolder.mkdir()) {
-                
-                File userSharedFolder = new File(userRootFolder.getAbsolutePath() + "Shared");
-                File userPrivateFolder = new File(userRootFolder.getAbsolutePath() + "Private");
-                File userPublicFolder = new File(userRootFolder.getAbsolutePath() + "Public");
-                
-                if (userSharedFolder.mkdir() && userPrivateFolder.mkdir() && userPublicFolder.mkdir()) {
-                    return true;
-                } else {
-                    return false;
-                }
-                
+                return true;              
             } else {
                 System.err.println("Could not create root folder for user: " + UserID);
                 return false;

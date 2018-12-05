@@ -43,7 +43,6 @@ public class Database {
         if (connection != null) {
             return true;
         }
-
         try {
             Class.forName("org.sqlite.JDBC");
             String url = "jdbc:sqlite:" + Utils.DATA_BASE_PATH;
@@ -308,13 +307,42 @@ public class Database {
 
     /**
      * Moves the file from one folder (source) to another (destination).
-     * @param fileID The file that should be moved.
+     * @param f The file that should be moved.
      * @param oldParentID The source folder.
      * @param newParentID The destinaton folder.
      * @return True if the file was moved, false otherwise.
      */
-    public static boolean MoveFile(int fileID, int oldParentID, int newParentID) {
-        return false;
+    public static boolean MoveFile(DBoxFile f, int oldParentID, int newParentID) {
+        
+        try {
+            // Decide if file or folder
+            if (f.getType() == DocumentType.File) {
+            String sql = "DELETE FROM FilesFolders WHERE FileID=" + f.getID() + "AND FolderID=" + oldParentID;
+                if (ExecuteSql(sql)) {
+                    
+                    sql = "INSERT INTO FilesFolders (FileID,FolderID) VALUES(" + f.getID() + ", " + newParentID + ")";
+                    return ExecuteSql(sql);
+                    
+                } else {
+                    return false;
+                }          
+        } else if (f.getType() == DocumentType.Normal){
+            String sql = "DELETE FROM FoldersFolders WHERE ChildID=" + f.getID() + "AND ParentID=" + oldParentID;
+            if (ExecuteSql(sql)) {
+                    
+                sql = "INSERT INTO FoldersFolders (ChildID, ParentID) VALUES(" + f.getID() + ", " + newParentID + ")";
+                return ExecuteSql(sql);
+                } else {
+                    return false;
+                }         
+        } else {
+            return false;
+        }          
+        } catch(Exception ex)
+        {
+            System.out.println(ex.getMessage());
+            return false;
+        }
     }
    
     /**
