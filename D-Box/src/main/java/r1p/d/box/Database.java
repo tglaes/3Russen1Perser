@@ -296,13 +296,47 @@ public class Database {
     }
 
     /**
-     * Creates a new File in the a specific folder.
+     * Creates a new File in the a specific folder. The file should already be in the folder of the user.
      * @param f The file object.
      * @param parentFileID The folder in which the new file should be placed.
-     * @return True if the file was created, false otherwise.
+     * @return The id created file or -1.
      */
-    public static boolean CreateNewFile(File f, int parentFileID) {
-        return false;
+    public static int CreateNewFile(File f, int parentFileID) {
+        
+        DBoxFile folder = GetFolder(parentFileID);
+        if (folder != null) {
+            
+            if (f.isDirectory()) {
+                
+                // Create new folder
+                String sql = "INSERT INTO Folders (" + FOLDER_PATH + ", " + FOLDER_USERID + ", " + FOLDER_TYPE + ") VALUES('" + Utils.GetRelativePath(f.getAbsolutePath()) + "', " + folder.getUserID() + ", "  + 3 + ")";
+                if (ExecuteSql(sql)) {
+                    // Create new entry in folderfolders
+                    sql = "INSERT INTO FoldersFolders (ParentID, ChildID) VALUES(" + parentFileID + "," + GetLastGeneratedID() + ")";
+                    if (ExecuteSql(sql)) {
+                        return GetLastGeneratedID();
+                    }
+                } else {
+                    return -1;
+                }             
+            } else if (f.isFile()) {
+                
+                // Create new file
+                String sql = "INSERT INTO Files (" + FOLDER_PATH + ", " + FOLDER_USERID + ") VALUES('" + Utils.GetRelativePath(f.getAbsolutePath()) + "', " + folder.getUserID() +")";
+                if (ExecuteSql(sql)) {
+                    // Create new entry in filesfolder
+                    sql = "INSERT INTO FilesFolders (FolderID, FileID) VALUES(" + parentFileID + "," + GetLastGeneratedID() + ")";
+                    if (ExecuteSql(sql)) {
+                        return GetLastGeneratedID();
+                    }
+                } else {
+                    return -1;
+                }          
+            }           
+        } else {
+            return -1;
+        }     
+        return -1;
     }
 
     /**

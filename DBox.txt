@@ -1,0 +1,6 @@
+-Jeder Benutzer erhält 3 Ordner
+	- Shared -> Alle Dateien und Ordner die andere Benutzer mit ihm geteilt haben.
+	- Private -> Ein Ordner indem der Benutzer seine eigenen privaten Dateien und Ordner verwalten kann.
+	- Public -> In diesem Ordner sind alle Dateien und Ordner öffentlich (lesbar) für alle anderen Benutzer
+
+-Dateien können nur im privaten Ordner verschoben werden.

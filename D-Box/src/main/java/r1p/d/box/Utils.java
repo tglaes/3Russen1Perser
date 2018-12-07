@@ -95,7 +95,11 @@ public class Utils {
         }
     }
     
-    public File GetFile(String path){
+    public static File GetFile(String path){
+        return null;
+    }
+    
+    public static String GetRelativePath(String path){
         return null;
     }
 }
