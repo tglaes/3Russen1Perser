@@ -100,6 +100,8 @@ public class Utils {
     }
     
     public static String GetRelativePath(String path){
-        return null;
+        
+        int index = path.indexOf("\\Root\\");
+        return path.substring(index + 5);
     }
 }

@@ -35,19 +35,17 @@ public class MyUI extends UI {
         
         //WrappedSession ws = vaadinRequest.getWrappedSession(false);    
         
-        final TextField name = new TextField();
-        name.setCaption("Type your name here:");
-
-        Button button = new Button("Click Me");
-        button.addClickListener(e -> {
-            User u = Database.GetUser(1);
-            List<DBoxFile> list = Database.GetUserStandardFolders(u.getUserID());
+        final TextField testField = new TextField();
+        testField.setCaption("Test:");
             
-            layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!, " + list.toString()));
+        Button button = new Button("Start Test");
+        button.addClickListener(e -> {
+                    
+            
+            layout.addComponent(new Label("Test output: " + Utils.GetRelativePath(testField.getValue())));
         });
         
-        layout.addComponents(name, button);
+        layout.addComponents(testField, button);
         
         setContent(layout);
     }
