@@ -28,26 +28,8 @@ public class MyUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         final VerticalLayout layout = new VerticalLayout();
         
-        Utils.CheckRootFolder();
-        if (!Database.Connect()) {
-            exit(-1);
-        }
-        
-        //WrappedSession ws = vaadinRequest.getWrappedSession(false);    
-        
-        final TextField testField = new TextField();
-        testField.setCaption("Test:");
-            
-        Button button = new Button("Start Test");
-        button.addClickListener(e -> {
-                    
-            
-            layout.addComponent(new Label("Test output: " + Utils.GetRelativePath(testField.getValue())));
-        });
-        
-        layout.addComponents(testField, button);
-        
-        setContent(layout);
+    LoginWindow test = new LoginWindow();
+    layout.addComponent(test);
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
