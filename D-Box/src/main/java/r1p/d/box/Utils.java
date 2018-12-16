@@ -16,6 +16,8 @@ public class Utils {
     // Tristan
     public static final String PROJECT_PATH = "C:\\Users\\Tristan Glaes\\Documents\\3Russen1Perser\\";
     // Mahan
+    public static final String PROJECT_PATH_MAHAN ="C:\\Users\\Mahan\\git\\3Russen1Perser\\";
+    public static final String DATABASE_PATH_MAHAN=PROJECT_PATH_MAHAN+"D-Box\\src\\main\\data\\Database\\DBoxDB.db";
     // Vadim
     // Iurie
     public static final String DATA_BASE_PATH = PROJECT_PATH + "D-Box\\src\\main\\data\\Database\\DBoxDB.db";
