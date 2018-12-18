@@ -13,49 +13,49 @@ import java.util.List;
  */
 public class User implements java.io.Serializable {
     
-    private int UserID;
+    private int userId;
     
-    private String EMail;
+    private String email;
     
-    private String FirstName;
+    private String firstname;
     
-    private String LastName;
+    private String lastname;
     
     public User(){}
     
     public int getUserID(){
-        return UserID;
+        return userId;
     }
     
     public void setUserID(int userID){
-        UserID = userID;
+        userId = userID;
     }
     
     public String getEmail(){
-        return EMail;
+        return email;
     }
     
     public void setEmail(String email){
-        EMail = email;
+        this.email = email;
     }
     
     public String getFirstname(){
-        return FirstName;
+        return firstname;
     }
     
     public void setFirstname(String firstname){
-        FirstName = firstname;
+        firstname = firstname;
     }
     
     public String getLastname(){
-        return LastName;
+        return lastname;
     }
     
     public void setLastname(String lastname) {
-        LastName = lastname;
+        lastname = lastname;
     }
     
     public String getFullName(){
-        return FirstName + ", " + LastName;
+        return firstname + ", " + lastname;
     }
 }

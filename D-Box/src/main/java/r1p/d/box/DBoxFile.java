@@ -11,42 +11,42 @@ package r1p.d.box;
  */
 public class DBoxFile implements java.io.Serializable {
     
-    private int ID;
-    private int UserID;
-    private DocumentType Type;
-    private String Path;
+    private int id;
+    private int userId;
+    private DocumentType type;
+    private String path;
 
     public DBoxFile() {}
     
     public DocumentType getType() {
-        return Type;
+        return type;
     }
     
     public void setType(DocumentType t){
-        Type = t;
+        type = t;
     }
     
     public int getID(){
-        return ID;
+        return id;
     }
     
     public void setID(int id){
-        ID = id;
+        this.id = id;
     }
     
     public int getUserID(){
-        return UserID;
+        return userId;
     }
     
     public void setUserID(int userID){
-        UserID = userID;
+        userId = userID;
     }
     
     public String getPath(){
-        return Path;
+        return path;
     }
     
     public void setPath(String path){
-        Path = path;
+        this.path = path;
     }
 }
