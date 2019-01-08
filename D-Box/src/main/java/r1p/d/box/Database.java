@@ -201,6 +201,7 @@ public class Database {
                 if (rs.next()) {
                     User u = new User();
                     u.setUserID(rs.getInt(USER_ID));
+                    u.setEmail(rs.getString(USER_EMAIL));
                     u.setFirstname(rs.getString(USER_FIRSTNAME));
                     u.setLastname(rs.getString(USER_LASTNAME));              
                     return u;
