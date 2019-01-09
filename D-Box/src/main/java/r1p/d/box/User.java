@@ -24,15 +24,15 @@ public class User implements java.io.Serializable {
     public User(){}
     
     public int getUserID(){
-        return userId;
+        return this.userId;
     }
     
     public void setUserID(int userID){
-        userId = userID;
+        this.userId = userID;
     }
     
     public String getEmail(){
-        return email;
+        return this.email;
     }
     
     public void setEmail(String email){
@@ -44,18 +44,18 @@ public class User implements java.io.Serializable {
     }
     
     public void setFirstname(String firstname){
-        firstname = firstname;
+        this.firstname = firstname;
     }
     
     public String getLastname(){
-        return lastname;
+        return this.lastname;
     }
     
     public void setLastname(String lastname) {
-        lastname = lastname;
+        this.lastname = lastname;
     }
     
     public String getFullName(){
-        return firstname + ", " + lastname;
+        return this.firstname + ", " + this.lastname;
     }
 }
