@@ -42,7 +42,7 @@ public class MyUI extends UI {
         button.addClickListener(e -> {
                     
             
-            layout.addComponent(new Label("Test output: " + Utils.GetRelativePath(testField.getValue())));
+            layout.addComponent(new Label(Database.CheckLogin("tristan.glaes@gmx.de", "xxx").getFullName()));
         });
         
         layout.addComponents(testField, button);

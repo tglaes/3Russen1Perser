@@ -25,8 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
-import vaadin.scala.BaseTheme;
-import vaadin.scala.Reindeer;
 /**
  *
  * @author Vadim

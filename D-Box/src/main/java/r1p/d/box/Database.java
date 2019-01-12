@@ -201,6 +201,7 @@ public class Database {
                 if (rs.next()) {
                     User u = new User();
                     u.setUserID(rs.getInt(USER_ID));
+                    u.setEmail(rs.getString(USER_EMAIL));
                     u.setFirstname(rs.getString(USER_FIRSTNAME));
                     u.setLastname(rs.getString(USER_LASTNAME));              
                     return u;
@@ -385,8 +386,54 @@ public class Database {
      * @param userEmail The email of the person the file is shared with.
      * @return True if the file was shared, false otherwise.
      */
-    public static boolean ShareFile(int fileID, String userEmail) {
-        return false;
+    public static boolean ShareFile(int fileID, String userEmail) {      
+       
+        try {  
+            // Get user shared folder
+            String sql = "SELECT ID FROM Folders WHERE UserID=" + GetUserByEmail(userEmail) + " AND Type=0";
+            ResultSet rs = ExecuteSqlWithReturn(sql);
+            if (rs != null) {              
+                if (rs.next()) {
+                    
+                    int folderID = rs.getInt(FOLDER_ID);
+                    sql = "INSERT INTO FoldersFolders (ParentID,ChildID) VALUES(" + folderID + ", " + fileID + " )";
+                    return ExecuteSql(sql);
+                    
+                } else {
+                    return false;
+                }             
+            } else {
+                return false;
+            }               
+        
+        } catch (Exception ex){
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+    
+    public static int GetUserByEmail(String email){
+        
+        try {
+        
+            String sql = "SELECT ID FROM Users WHERE Email='" + email + "'";
+            ResultSet rs = ExecuteSqlWithReturn(sql);
+            if (rs != null) {
+                
+                if (rs.next()) {
+                    
+                    return rs.getInt(USER_ID);
+                    
+                } else {
+                    return -1;
+                }             
+            } else {
+                return -1;
+            }    
+        } catch (Exception ex){
+            System.out.println(ex.getMessage());
+            return -1;
+        }       
     }
 
     /**
@@ -445,7 +492,7 @@ public class Database {
                     f.setID(rs.getInt(FOLDER_ID));
                     f.setPath(rs.getString(FOLDER_PATH));
                     f.setType(Utils.IntToDocumentType(rs.getInt(FOLDER_TYPE)));
-                    f.setUserID(rs.getInt(FOLDER_USERID)); 
+                    f.setUserID(rs.getInt(FOLDER_USERID));                  
                     files.add(f);
                 }
                 
