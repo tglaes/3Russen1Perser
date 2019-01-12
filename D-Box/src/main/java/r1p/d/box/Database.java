@@ -445,7 +445,7 @@ public class Database {
                     f.setID(rs.getInt(FOLDER_ID));
                     f.setPath(rs.getString(FOLDER_PATH));
                     f.setType(Utils.IntToDocumentType(rs.getInt(FOLDER_TYPE)));
-                    f.setUserID(rs.getInt(FOLDER_USERID));                  
+                    f.setUserID(rs.getInt(FOLDER_USERID)); 
                     files.add(f);
                 }
                 
