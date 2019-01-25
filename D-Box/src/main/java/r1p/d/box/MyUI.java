@@ -4,9 +4,12 @@ import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -23,31 +26,19 @@ import java.util.List;
  */
 @Theme("mytheme")
 public class MyUI extends UI {
-
+    Navigator navigator; 
+    
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        final VerticalLayout layout = new VerticalLayout();
         
-        Utils.CheckRootFolder();
-        if (!Database.Connect()) {
-            exit(-1);
-        }
+        getPage().setTitle("Navigation Example");
+
+        // Create a navigator to control the views
         
-        //WrappedSession ws = vaadinRequest.getWrappedSession(false);    
-        
-        final TextField testField = new TextField();
-        testField.setCaption("Test:");
-            
-        Button button = new Button("Start Test");
-        button.addClickListener(e -> {
-                    
-            
-            layout.addComponent(new Label(Database.CheckLogin("tristan.glaes@gmx.de", "xxx").getFullName()));
-        });
-        
-        layout.addComponents(testField, button);
-        
-        setContent(layout);
+        navigator = new Navigator(this, this);
+        navigator.addView("", new StartView(navigator));
+        navigator.addView("mainview", new Mainview());
+        //navigator.addView("view1", new View1());
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
